@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/androidthings.iml" filepath="$PROJECT_DIR$/androidthings.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sparkfun/sparkfun.iml" filepath="$PROJECT_DIR$/sparkfun/sparkfun.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sparkfunExample/sparkfunExample.iml" filepath="$PROJECT_DIR$/sparkfunExample/sparkfunExample.iml" />
+    </modules>
+  </component>
+</project>
