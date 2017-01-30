@@ -29,7 +29,7 @@ root `build.gradle`
 ```
 allprojects {
     repositories {
-        maven { url  "http://dl.bintray.com/hcchoong79/contrib-driver-sparkfun" }
+        maven { url  "http://dl.bintray.com/hcchoong79/maven" }
         ...
     }
 }

@@ -44,7 +44,7 @@ allprojects {
 apply from: 'build.gradle'
 apply plugin: 'maven-publish'
 
-def packageVersion = '0.2'
+def packageVersion = '0.1'
 
 task sourceJar(type: Jar) {
     classifier = 'sources'
@@ -55,7 +55,7 @@ publishing {
     publications {
         driverPublish(MavenPublication) {
             groupId 'com.google.android.things.contrib'
-            artifactId "driver-$project.name"
+            artifactId "contrib-driver-sparkfun"
             version packageVersion
             artifacts = configurations.archives.artifacts
             artifact sourceJar
@@ -83,9 +83,10 @@ bintray {
   publish = true
 
   pkg {
-    repo = 'androidthings'
-    name = "contrib-driver-$project.name"
-    userOrg = 'google'
+    repo = 'maven'
+    name = "contrib-driver-sparkfun"
+    licenses = ['Apache-2.0']
+    vcsUrl = 'https://github.com/hcchoong79/androidthings.git'
 
     version {
       name = packageVersion
