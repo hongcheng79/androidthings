@@ -3,6 +3,7 @@ SparkFun driver for Android Things
 
 ![alt text](https://github.com/hcchoong79/androidthings/blob/master/sparkfun/SparkFunEdison.jpg "Sparkfun Android Things")
 
+
 This driver provides easy access to the peripherals available on the [SparkFun for Android
 Things][product]:
 - OLEDBlock (GPIO) [oled]
