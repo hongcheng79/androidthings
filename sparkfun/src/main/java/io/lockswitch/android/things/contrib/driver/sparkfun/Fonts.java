@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Google Inc.
+ * Copyright 2017 Choong Hong Cheng, Lockswitch Sdn Bhd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.android.things.contrib.driver.sparkfun;
+package io.lockswitch.android.things.contrib.driver.sparkfun;
 
 /**
  * Contain Fonts hex values

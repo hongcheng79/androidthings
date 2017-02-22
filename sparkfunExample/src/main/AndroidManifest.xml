@@ -15,7 +15,7 @@
   limitations under the License.
   -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.androidthings.myproject">
+    package="io.lockswitch.android.things.example.sparkfun">
 
     <application
         android:allowBackup="true"
@@ -24,7 +24,7 @@
 
         <uses-library android:name="com.google.android.things"/>
 
-        <activity android:name=".MainActivity">
+        <activity android:name="io.lockswitch.android.things.example.sparkfun.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

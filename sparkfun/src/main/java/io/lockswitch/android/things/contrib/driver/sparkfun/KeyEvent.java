@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Google Inc.
+ * Copyright 2017 Choong Hong Cheng, Lockswitch Sdn Bhd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-package com.google.android.things.contrib.driver.sparkfun;
+package io.lockswitch.android.things.contrib.driver.sparkfun;
 
 /**
  * Contain OLED Block key events
  */
 public interface KeyEvent {
-    public static int UP = 47;
-    public static int DOWN = 44;
-    public static int LEFT = 46;
-    public static int RIGHT = 45;
-    public static int SELECT = 48;
-    public static int A = 49;
-    public static int B = 46;
+    public static int UP = 50;
+    public static int DOWN = 51;
+    public static int LEFT = 52;
+    public static int RIGHT = 53;
+    public static int SELECT = 54;
+    public static int A = 55;
+    public static int B = 56;
 }

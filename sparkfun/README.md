@@ -7,7 +7,7 @@ SparkFun driver for Android Things
 This driver provides easy access to the peripherals available on the [SparkFun for Android
 Things][product]:
 - OLEDBlock (GPIO) [oled]
-- 9 Degrees of Freedom (Work in progress) [gyro]
+- 9 Degrees of Freedom - LSM9DS0 (I2C) (Work in progress) [gyro]
 - UART (Work in progress) [uart]
 
 Work in the pipeline is to port some LPWAN code to Android Things platform through UART which cover
@@ -40,7 +40,7 @@ allprojects {
 module `build.gradle`
 ```
 dependencies {
-    compile 'com.google.android.things.contrib:sparkfun:<version>'
+    compile 'io.lockswitch.android.things.contrib:<version>'
 }
 ```
 
@@ -49,11 +49,11 @@ dependencies {
 
 ```java
 // import the Sparkfun driver
-import com.google.android.things.contrib.driver.sparkfun.OLEDBlock;
+import io.lockswitch.android.things.contrib.driver.sparkfun.OLEDBlock;
 // Font to be use for OLED
-import com.google.android.things.contrib.driver.sparkfun.Fonts;
+import io.lockswitch.android.things.contrib.driver.sparkfun.Fonts;
 // SSD1306 for OLED display
-import com.google.android.things.contrib.driver.sparkfun.SSD1306;
+import io.lockswitch.android.things.contrib.driver.sparkfun.SSD1306;
 ```
 
 ```java
@@ -93,21 +93,21 @@ sparkFunOLDEBlock.close();
 
 ```java
 // Get key events - A, B, UP, DOWN, LEFT, RIGHT, SELECT
-// Class is defined in com.google.android.things.contrib.driver.sparkfun.KeyEvent
+// Class is defined in io.lockswitch.android.things.contrib.driver.sparkfun.KeyEvent
 // This wil also register the button driver
 OLEDBlock sparkFunOLDEBlock = new OLEDBlock();
 
 // In your Activity.
 @Override
 public boolean onKeyDown(int keyCode, KeyEvent event) {
-    if ( keyCode == com.google.android.things.contrib.driver.sparkfun.KeyEvent.A) {
+    if ( keyCode == io.lockswitch.android.things.contrib.driver.sparkfun.KeyEvent.A) {
         // ...
     }
     return super.onKeyDown(keyCode, event);
 }
 @Override
 public boolean onKeyUp(int keyCode, KeyEvent event) {
-    if ( keyCode == com.google.android.things.contrib.driver.sparkfun.KeyEvent.A) {
+    if ( keyCode == io.lockswitch.android.things.contrib.driver.sparkfun.KeyEvent.A) {
         // ...
     }
     return super.onKeyUp(keyCode, event);
@@ -117,7 +117,7 @@ public boolean onKeyUp(int keyCode, KeyEvent event) {
 License
 -------
 
-Copyright 2016 Google Inc.
+Copyright 2017 Choong Hong Cheng, Lockswitch Sdn Bhd
 
 Licensed to the Apache Software Foundation (ASF) under one or more contributor
 license agreements.  See the NOTICE file distributed with this work for

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.android.things.contrib.driver.sparkfun;
+package io.lockswitch.android.things.contrib.driver.sparkfun;
 
 import android.graphics.Bitmap;
 

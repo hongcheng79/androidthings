@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Google Inc.
+ * Copyright 2017 Choong Hong Cheng, Lockswitch Sdn Bhd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.android.things.contrib.driver.sparkfun;
+package io.lockswitch.android.things.contrib.driver.sparkfun;
 
 import android.util.Log;
 
@@ -34,74 +34,58 @@ import java.util.List;
 public class OLEDBlock implements Closeable {
     private static final String TAG = OLEDBlock.class.getSimpleName();
 
-    private int buttons[] = { KeyEvent.UP, KeyEvent.DOWN, KeyEvent.LEFT, KeyEvent.RIGHT, KeyEvent.SELECT, KeyEvent.A, KeyEvent.B };
-    private String GPIOButtons[] = { "GP47", "GP44", "GP165", "GP45", "GP48", "GP49", "GP46" };
+    private int buttons[] = { KeyEvent.SELECT, KeyEvent.A, KeyEvent.B , KeyEvent.UP, KeyEvent.DOWN , KeyEvent.LEFT , KeyEvent.RIGHT };
+    private String GPIOButtons[] = { "GP48", "GP49", "GP46", "GP47", "GP44", "GP165" , "GP45" };
 
     private List<ButtonInputDriver> buttonInputDriverList = new ArrayList<ButtonInputDriver>();
+
     private SSD1306 ssd1306;
 
-    public OLEDBlock() {
+    public OLEDBlock() throws IOException {
         PeripheralManagerService peripheralManagerService = new PeripheralManagerService();
 
+        // Make sure GPIO is available for buttons
         List<String> gpioList = peripheralManagerService.getGpioList();
         if (gpioList.isEmpty()) {
             Log.i(TAG, "No GPIO available on this device.");
+            throw new IOException("GPIO interface is require");
         } else {
             Log.i(TAG, "List of available GPIO : " + gpioList);
+            for ( int i = 0; i < GPIOButtons.length; i ++ ) {
+                if ( gpioList.contains(GPIOButtons[i]) == false )
+                    Log.i(TAG, "GPIO "+GPIOButtons[i]+" is not available on this device.");
+            }
+            // SSD1306
+            if (gpioList.contains("GP14")== false )
+                Log.i(TAG, "GPIO GP14 is not available on this device.");
+            if (gpioList.contains("GP15")== false )
+                Log.i(TAG, "GPIO GP15 is not available on this device.");
         }
 
-        List<String> i2cList = peripheralManagerService.getI2cBusList();
-        if (i2cList.isEmpty()) {
-            Log.i(TAG, "No I2C available on this device.");
-        } else {
-            Log.i(TAG, "List of available I2C : " + i2cList);
-        }
-
-        List<String> pwmList = peripheralManagerService.getPwmList();
-        if (pwmList.isEmpty()) {
-            Log.i(TAG, "No PWM available on this device.");
-        } else {
-            Log.i(TAG, "List of available PWM : " + pwmList);
-        }
-
+        // SPI will be use by SSD1306 OLED display
         List<String> spiList = peripheralManagerService.getSpiBusList();
         if (spiList.isEmpty()) {
             Log.i(TAG, "No SPI available on this device.");
+            throw new IOException("SPI interface is require");
         } else {
             Log.i(TAG, "List of available SPI : " + spiList);
         }
 
-        List<String> uartList = peripheralManagerService.getUartDeviceList();
-        if (uartList.isEmpty()) {
-            Log.i(TAG, "No UART available on this device.");
-        } else {
-            Log.i(TAG, "List of available UART : " + uartList);
-        }
-
         // Setup button
-        try {
-            for ( int i = 0 ; i < GPIOButtons.length; i++ ) {
-                ButtonInputDriver buttonInputDriver = new ButtonInputDriver(GPIOButtons[i],
-                        Button.LogicState.PRESSED_WHEN_LOW,
-                        buttons[i] // the keycode to send
-                );
-                buttonInputDriver.register();
-                buttonInputDriverList.add(buttonInputDriver);
-            }
-        } catch (IOException e) {
-            // error configuring button...
-            Log.e(TAG,"Unable to configure button",e);
+        for ( int i = 0 ; i < GPIOButtons.length; i++ ) {
+            ButtonInputDriver buttonInputDriver = new ButtonInputDriver(GPIOButtons[i],
+                    Button.LogicState.PRESSED_WHEN_LOW,
+                    buttons[i] // the keycode to send
+            );
+            buttonInputDriver.register();
+            buttonInputDriverList.add(buttonInputDriver);
         }
 
-        // Test OLED
         try {
-            ssd1306 = new SSD1306("SPI2");
-            //dev13035 = new SSD1306("I2C1");
-        } catch (IOException e) {
-            // couldn't configure the display...
-            Log.e(TAG,"Unable to configure display",e);
+            ssd1306 = new SSD1306(spiList.get(0));
         } catch (InterruptedException e) {
-            Log.e(TAG,"Unable to configure display",e);
+            Log.e(TAG,"error",e);
+            throw new IOException("Unable to init SSD1306");
         }
 
         Log.i(TAG, "Completed init");
@@ -125,6 +109,7 @@ public class OLEDBlock implements Closeable {
                 Log.e(TAG,"Unable to close",e);
             }
         }
+
         try {
             ssd1306.close();
         } catch (IOException e) {
